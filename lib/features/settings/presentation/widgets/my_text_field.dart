@@ -1,3 +1,4 @@
+import 'package:final_project/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
@@ -8,12 +9,13 @@ class MyTextField extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return TextField(
+      //keyboardType: TextInputType.visiblePassword,
       controller: txt,
       style: TextStyle(color: Colors.white),
       cursorColor: Colors.white,
       readOnly: r,
       decoration: InputDecoration(
-        fillColor: Colors.green,
+        fillColor: MyColors.mainColor,
         filled: true,
       ),
     );

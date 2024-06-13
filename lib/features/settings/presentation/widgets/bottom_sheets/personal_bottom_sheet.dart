@@ -13,33 +13,34 @@ class _PersonalBottomSheetState extends State<PersonalBottomSheet> {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
-  late TextEditingController roletxt = TextEditingController();
-  late TextEditingController worktxt = TextEditingController();
-  late TextEditingController usagetxt = TextEditingController();
+  late TextEditingController roletxt;
+  late TextEditingController worktxt;
+  late TextEditingController usagetxt;
   bool readOnly = false;
   late SettingsCubit bloc;
 
-  // void initState() {
-  //   bloc = BlocProvider.of<SettingsCubit>(context);
-  //   roletxt.text = bloc.roleTextGet.text;
-  //   worktxt.text = bloc.workTextGet.text;
-  //   usagetxt.text = bloc.usageTextGet.text;
-  //
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    bloc = BlocProvider.of<SettingsCubit>(context);
+    roletxt = bloc.roleTextGet;
+    worktxt = bloc.workTextGet;
+    usagetxt = bloc.usageTextGet;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         bloc = BlocProvider.of<SettingsCubit>(context);
-        roletxt.text = bloc.roleTextGet.text;
-        worktxt.text = bloc.workTextGet.text;
-        usagetxt.text = bloc.usageTextGet.text;
+
         return Container(
           height: MediaQuery.of(context).size.height * .45,
+          padding: const EdgeInsets.all(8.0),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            // padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+            padding: EdgeInsets.zero,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

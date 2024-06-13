@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit() : super(SettingsInitial());
+
   bool arSwitch = false;
   bool darkSwitch = false;
   String currentLocale = "en";
@@ -24,6 +28,34 @@ class SettingsCubit extends Cubit<SettingsState> {
   TextEditingController _Old = TextEditingController();
   TextEditingController _New = TextEditingController();
   TextEditingController _Confirm = TextEditingController();
+  File? pickedImage;
+
+  Future<void> getImageFromCamera() async {
+    emit(SettingsInitial());
+    var image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      pickedImage = File(image.path);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("image_path", image.path);
+      debugPrint('picked image updated: ${pickedImage?.path}');
+    }
+    emit(ChangeProfileImage());
+  }
+
+  Future getImageFromGallery() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      pickedImage = File(image.path);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("image_path", image.path);
+      debugPrint('picked image updated: ${pickedImage?.path}');
+    }
+    emit(ChangeProfileImage());
+  }
+
+  bool isDark() {
+    return currentMode == ThemeMode.dark;
+  }
 
   void setCurrentLocale(String newLocale) async {
     currentLocale = newLocale;
@@ -39,11 +71,8 @@ class SettingsCubit extends Cubit<SettingsState> {
     prefs.setBool("isDark", currentMode == ThemeMode.dark);
   }
 
-  bool isDark() {
-    return currentMode == ThemeMode.dark;
-  }
-
   void usageText(TextEditingController value) async {
+    emit(SettingsInitial());
     _usageText = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -51,6 +80,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void workText(TextEditingController value) async {
+    emit(SettingsInitial());
     _workText = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -58,6 +88,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void roleText(TextEditingController value) async {
+    emit(SettingsInitial());
     _roleText = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -65,6 +96,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void fName(TextEditingController value) async {
+    emit(SettingsInitial());
     _fName = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -72,6 +104,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void lName(TextEditingController value) async {
+    emit(SettingsInitial());
     _lName = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -79,6 +112,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void uName(TextEditingController value) async {
+    emit(SettingsInitial());
     _uName = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -86,6 +120,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void eMail(TextEditingController value) async {
+    emit(SettingsInitial());
     _eMail = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -93,6 +128,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Street(TextEditingController value) async {
+    emit(SettingsInitial());
     _Street = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -100,6 +136,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void City(TextEditingController value) async {
+    emit(SettingsInitial());
     _City = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -107,6 +144,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Country(TextEditingController value) async {
+    emit(SettingsInitial());
     _Country = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -114,6 +152,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Phone(TextEditingController value) async {
+    emit(SettingsInitial());
     _Phone = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -121,6 +160,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Old(TextEditingController value) async {
+    emit(SettingsInitial());
     _Old = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -128,6 +168,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Neww(TextEditingController value) async {
+    emit(SettingsInitial());
     _New = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -135,6 +176,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void Confirm(TextEditingController value) async {
+    emit(SettingsInitial());
     _Confirm = value;
     emit(TextFieldState());
     final prefs = await SharedPreferences.getInstance();
@@ -143,34 +185,22 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   void getUserData() async {
     final prefs = await SharedPreferences.getInstance();
-    var usage = prefs.getString("usage");
-    if (usage != null) usageText(usageTextGet);
-    var role = prefs.getString("role");
-    if (role != null) roleText(roleTextGet);
-    var work = prefs.getString("work");
-    if (work != null) workText(workTextGet);
-    var fname = prefs.getString("fname");
-    if (fname != null) fName(fNameGet);
-    var lname = prefs.getString("lname");
-    if (lname != null) lName(lNameGet);
-    var uname = prefs.getString("uname");
-    if (uname != null) uName(uNameGet);
-    var email = prefs.getString("email");
-    if (email != null) eMail(eMailGet);
-    var phone = prefs.getString("phone");
-    if (phone != null) Phone(PhoneGet);
-    var street = prefs.getString("street");
-    if (street != null) Street(StreetGet);
-    var city = prefs.getString("city");
-    if (city != null) City(CityGet);
-    var country = prefs.getString("country");
-    if (country != null) Country(CountryGet);
-    var old = prefs.getString("old");
-    if (old != null) Old(OldGet);
-    var New = prefs.getString("New");
-    if (New != null) Neww(NewGet);
-    var confirm = prefs.getString("confirm");
-    if (confirm != null) Confirm(ConfirmGet);
+    String? path = prefs.getString("image_path");
+    pickedImage = path != null ? File(path) : null;
+    usageText(TextEditingController(text: prefs.getString("usage")));
+    roleText(TextEditingController(text: prefs.getString("role")));
+    workText(TextEditingController(text: prefs.getString("work")));
+    fName(TextEditingController(text: prefs.getString("fname")));
+    lName(TextEditingController(text: prefs.getString("lname")));
+    uName(TextEditingController(text: prefs.getString("uname")));
+    eMail(TextEditingController(text: prefs.getString("email")));
+    Phone(TextEditingController(text: prefs.getString("phone")));
+    Street(TextEditingController(text: prefs.getString("street")));
+    City(TextEditingController(text: prefs.getString("city")));
+    Country(TextEditingController(text: prefs.getString("country")));
+    Old(TextEditingController(text: prefs.getString("old")));
+    Neww(TextEditingController(text: prefs.getString("New")));
+    Confirm(TextEditingController(text: prefs.getString("confirm")));
     emit(GetUserDataState());
   }
 

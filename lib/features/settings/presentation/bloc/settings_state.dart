@@ -12,3 +12,5 @@ class SettingsTheme extends SettingsState {}
 class TextFieldState extends SettingsState {}
 
 class GetUserDataState extends SettingsState {}
+
+class ChangeProfileImage extends SettingsState {}
