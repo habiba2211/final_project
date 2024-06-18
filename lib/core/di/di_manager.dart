@@ -1,12 +1,23 @@
+import 'package:dio/dio.dart';
 import 'package:final_project/features/control/presentation/manager/control_cubit.dart';
 import 'package:final_project/features/login/presentation/bloc/login_cubit.dart';
 import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
 import 'package:final_project/layout/presentation/logic/home_layout_cubit.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/registeration/data/web_services/resgistration_web_service.dart';
+import '../../features/registeration/domain/repo/registration_repo.dart';
+import '../network/dio_factory.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> dependencyInjectionInit() async {
+
+  Dio dio = DioFactory.getDio();
+  // LocalStorage storage = LocalStorage();
+  //
+
+
   // Shared
 //   final mySharedPrefs = MySharedPrefs();
 //   await mySharedPrefs.sharedPrefsInit();
@@ -18,7 +29,10 @@ Future<void> dependencyInjectionInit() async {
 //
 // =================================================================
 // registration cubit
-  getIt.registerFactory(() => RegistrationCubit());
+  getIt.registerLazySingleton<RegistrationWebService>(() => RegistrationWebService(dio: dio));
+
+  getIt.registerLazySingleton<RegistrationRepo>(() => RegistrationRepo(regWebSer: getIt()));
+  getIt.registerFactory(() => RegistrationCubit(regRepo: getIt()));
 // =================================================================
 // login cubit
   getIt.registerFactory(() => LoginCubit());
