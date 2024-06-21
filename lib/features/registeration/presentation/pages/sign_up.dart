@@ -1,5 +1,6 @@
 import 'package:final_project/config/routes/routes.dart';
-import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
+// import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
+import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/features/registeration/presentation/widgets/field_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<RegistrationCubit>();
+    var cubit = context.read<SignUpBloc>();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -75,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                         txt: 'Nationality',
                         controller: cubit.parPhoneController,
                         obscureText: false,
-                        textInputType: TextInputType.phone,
+                        textInputType: TextInputType.text,
                         warningMessage: 'Please Enter Your Nationality',
                         postIcon: null,
                         sufIcon: null,
@@ -169,3 +170,4 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
+

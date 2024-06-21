@@ -3,7 +3,8 @@ import 'package:final_project/features/control/presentation/pages/control_screen
 import 'package:final_project/features/home/presentation/pages/home_screen.dart';
 import 'package:final_project/features/login/presentation/bloc/login_cubit.dart';
 import 'package:final_project/features/login/presentation/pages/login_screen.dart';
-import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
+// import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
+import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/features/registeration/presentation/pages/sign_up.dart';
 import 'package:final_project/features/settings/presentation/pages/SettingScreen.dart';
 import 'package:final_project/layout/home_layout.dart';
@@ -41,8 +42,15 @@ class Routes {
       case AppRoutes.signUp:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                create: (_) => getIt<RegistrationCubit>(),
-                child: const SignUpScreen()));
+                create: (_) => getIt<SignUpBloc>(),
+                child:  BlocConsumer<SignUpBloc, SignUpState>(
+  listener: (context, state) {
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    return SignUpScreen();
+  },
+)));
       case AppRoutes.homeLayout:
         return MaterialPageRoute(builder: (context) => const HomeLayout());
       case AppRoutes.homeLayout:
