@@ -1,4 +1,5 @@
 import 'package:final_project/config/routes/routes.dart';
+import 'package:final_project/core/utils/constants.dart';
 // import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
 import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/features/registeration/presentation/widgets/field_item.dart';
@@ -33,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                   height: 10.0,
                 ),
                 Form(
-                  key: cubit.formKey,
+                  key: Constants.formKey1,
                   child: Column(
                     children: [
                       TextFieldItem(

@@ -1,8 +1,10 @@
+import 'package:final_project/core/error/failuers.dart';
 import 'package:final_project/features/control/presentation/manager/control_cubit.dart';
 import 'package:final_project/features/control/presentation/pages/control_screen.dart';
 import 'package:final_project/features/home/presentation/pages/home_screen.dart';
-import 'package:final_project/features/login/presentation/bloc/login_cubit.dart';
+import 'package:final_project/features/login/presentation/bloc/login_bloc.dart';
 import 'package:final_project/features/login/presentation/pages/login_screen.dart';
+
 // import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
 import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/features/registeration/presentation/pages/sign_up.dart';
@@ -36,21 +38,45 @@ class Routes {
       case AppRoutes.login:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                  create: (_) => getIt<LoginCubit>(),
-                  child: const LoginScreen(),
+                  create: (_) => getIt<LoginBloc>(),
+                  child: BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state == ScreenStatus.successfully) {
+                        Navigator.pushReplacement(context, AppRoutes.homeLayout as Route<Object?>);
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Success"),
+                                  content:
+                                      Text(state.userEntity?.userName ?? ""),
+                                ));
+                      }if (state == ScreenStatus.failure) {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Failue"),
+                                  content:
+                                      Text(state.failures?.message??""),
+                                ));
+                      }
+                    },
+                    builder: (context, state) {
+                      return LoginScreen();
+                    },
+                  ),
                 ));
       case AppRoutes.signUp:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                 create: (_) => getIt<SignUpBloc>(),
-                child:  BlocConsumer<SignUpBloc, SignUpState>(
-  listener: (context, state) {
-    // TODO: implement listener
-  },
-  builder: (context, state) {
-    return SignUpScreen();
-  },
-)));
+                child: BlocConsumer<SignUpBloc, SignUpState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    return SignUpScreen();
+                  },
+                )));
       case AppRoutes.homeLayout:
         return MaterialPageRoute(builder: (context) => const HomeLayout());
       case AppRoutes.homeLayout:

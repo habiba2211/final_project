@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:final_project/config/routes/routes.dart';
 import 'package:final_project/core/api/api_manager.dart';
+import 'package:final_project/core/utils/constants.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds_impl.dart';
 import 'package:final_project/features/registeration/data/models/requst_data.dart';
@@ -20,7 +21,7 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ApiManager apiManager;
   static SignUpBloc get(context) => BlocProvider.of(context);
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -31,7 +32,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final TextEditingController noteController = TextEditingController();
 
   confirmForm() {
-    if (formKey.currentState!.validate()) {
+    if (Constants.formKey1.currentState!.validate()) {
       FocusManager.instance.primaryFocus?.unfocus();
       add(RegiesterEvent());
       // Navigator.pushNamed(

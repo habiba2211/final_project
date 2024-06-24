@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:final_project/core/api/api_manager.dart';
 import 'package:final_project/features/control/presentation/manager/control_cubit.dart';
+import 'package:final_project/features/login/presentation/bloc/login_bloc.dart';
 // import 'package:final_project/features/login/data/web_services/signin_web_service.dart';
 // import 'package:final_project/features/login/domain/repo/signin_repo.dart';
-import 'package:final_project/features/login/presentation/bloc/login_cubit.dart';
 // import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
 import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/layout/presentation/logic/home_layout_cubit.dart';
@@ -43,7 +43,7 @@ Future<void> dependencyInjectionInit() async {
 //   getIt.registerLazySingleton<SigninWebService>(() => SigninWebService(dio: dio));
 //
 //   getIt.registerLazySingleton<SigninRepo>(() => SigninRepo(signWebSer: getIt()));
-  getIt.registerFactory(() => LoginCubit());
+  getIt.registerFactory(() => LoginBloc(ApiManager()));
 // =================================================================
 // control cubit
   getIt.registerFactory(() => ControlCubit());
