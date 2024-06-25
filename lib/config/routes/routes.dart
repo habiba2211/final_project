@@ -41,16 +41,27 @@ class Routes {
                   create: (_) => getIt<LoginBloc>(),
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
-                      if (state == ScreenStatus.successfully) {
-                        Navigator.pushReplacement(context, AppRoutes.homeLayout as Route<Object?>);
+                      if (state.screenStatus == ScreenStatus.successfully) {
+                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeLayout, (route) => false);
                         showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
                                   title: Text("Success"),
                                   content:
                                       Text(state.userEntity?.userName ?? ""),
-                                ));
-                      }if (state == ScreenStatus.failure) {
+                                ),
+
+                        );
+                          Navigator.pop;
+
+                        // Navigator.pushReplacement(
+                        //     navigatorKey.currentState!.context,
+                        //     AppRoutes.homeLayout as Route<Object?>,
+                        //   );
+                        // LoginBloc.get(context).emailController.clear();
+                        // LoginBloc.get(context).passWordController.clear();
+
+                      }if (state.screenStatus == ScreenStatus.failure) {
                         showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
