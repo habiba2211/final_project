@@ -29,14 +29,15 @@ class _SettingScreenState extends State<SettingScreen> {
       builder: (context, state) {
         bloc = BlocProvider.of<SettingsCubit>(context);
         return Scaffold(
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           body: Stack(children: [
-            Image.asset(
-              "assets/images/12.jpg",
-              fit: BoxFit.fill,
-              height: double.infinity,
-              width: double.infinity,
-            ),
+            // Image.asset(
+            //   "assets/images/77.jpg",
+            //   fit: BoxFit.cover,
+            //   height: double.infinity,
+            //   width: double.infinity,
+            // ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -75,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               height: 50,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white),
+                                  color: Colors.grey.shade100),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -107,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       textAlign: TextAlign.start,
                       style: txtStyle.copyWith(
                         fontSize: 30,
-                        color: Colors.white,
+                        color: Colors.green,
                       )),
                   SizedBox(
                     height: 20,

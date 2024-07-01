@@ -1,7 +1,7 @@
 import 'package:final_project/features/home/presentation/widgets/history_column.dart';
-import 'package:final_project/features/home/presentation/widgets/row_item.dart';
-import 'package:final_project/features/home/presentation/widgets/search_item.dart';
+import 'package:final_project/layout/presentation/logic/home_layout_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeTap extends StatefulWidget {
   const HomeTap({
@@ -15,56 +15,61 @@ class HomeTap extends StatefulWidget {
 class _HomeTapState extends State<HomeTap> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      //extendBody: true,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   title: const Text(
-      //     'AI NABTA',
-      //     style: TextStyle(
-      //         fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
-      //   ),
-      // ),
-      body: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: 50, bottom: 10, right: 20, left: 20),
-        /* decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('images/77.jpg'),
-            fit: BoxFit.cover,
-          )),*/
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FirstRow(),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                'Welcom to AI NAPTA!',
-                style: TextStyle(
-                    fontSize: 27,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green[900]),
-              ),
-            ),
-            const SearchBox(),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 15),
-              child: const Text(
-                'History',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
+    return BlocBuilder<HomeLayoutCubit, HomeLayoutState>(
+        builder: (context, selectedCountryState) {
+      var cubit = HomeLayoutCubit.get(context);
+      return Stack(children: [
+        Container(
+          color: Colors.white,
+        )
+        // Image.asset(
+        //   "assets/images/77.jpg",
+        //   fit: BoxFit.fill,
+        //   height: double.infinity,
+        //   width: double.infinity,
+        // ),
+        ,
+        Container(
+          color: Colors.transparent,
+          width: double.infinity,
+          margin:
+              const EdgeInsets.only(top: 50, bottom: 10, right: 20, left: 20),
+          /* decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('images/77.jpg'),
+                    fit: BoxFit.cover,
+                  )),*/
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //const FirstRow(),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  'Welcome to AI NAPTA!',
+                  style: TextStyle(
+                      fontSize: 27,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.green),
                 ),
               ),
-            ),
-            Expanded(child: HistoryColumn()),
-          ],
+              //const SearchBox(),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text(
+                  'History',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.green),
+                ),
+              ),
+              Expanded(child: HistoryColumn()),
+            ],
+          ),
         ),
-      ),
-    );
+      ]);
+    });
   }
 }
 //Column(

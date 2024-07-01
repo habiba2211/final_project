@@ -19,7 +19,10 @@ class _ControlScreenState extends State<ControlScreen> {
         child: Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text("Control Page"),
+        title: const Text(
+          "Control Page",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -27,8 +30,15 @@ class _ControlScreenState extends State<ControlScreen> {
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.bluetooth);
             },
-            icon: Icon(Icons.bluetooth),
+            icon: Icon(
+              Icons.bluetooth,
+              size: 30,
+              color: Colors.white,
+            ),
             color: Colors.white,
+          ),
+          SizedBox(
+            width: 12,
           )
         ],
       ),

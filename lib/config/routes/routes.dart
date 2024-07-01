@@ -1,10 +1,8 @@
-import 'package:final_project/core/error/failuers.dart';
 import 'package:final_project/features/control/presentation/manager/control_cubit.dart';
 import 'package:final_project/features/control/presentation/pages/control_screen.dart';
 import 'package:final_project/features/home/presentation/pages/home_screen.dart';
 import 'package:final_project/features/login/presentation/bloc/login_bloc.dart';
 import 'package:final_project/features/login/presentation/pages/login_screen.dart';
-
 // import 'package:final_project/features/registeration/presentation/bloc/registration_cubit.dart';
 import 'package:final_project/features/registeration/presentation/bloc/sign_up_bloc.dart';
 import 'package:final_project/features/registeration/presentation/pages/sign_up.dart';
@@ -38,21 +36,20 @@ class Routes {
       case AppRoutes.login:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                  create: (_) => getIt<LoginBloc>(),
+                  create: (_) => serviceLocator<LoginBloc>(),
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
                       if (state.screenStatus == ScreenStatus.successfully) {
-                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeLayout, (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRoutes.homeLayout, (route) => false);
                         showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("Success"),
-                                  content:
-                                      Text(state.userEntity?.userName ?? ""),
-                                ),
-
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Success"),
+                            content: Text(state.userEntity?.userName ?? ""),
+                          ),
                         );
-                          Navigator.pop;
+                        Navigator.pop;
 
                         // Navigator.pushReplacement(
                         //     navigatorKey.currentState!.context,
@@ -60,14 +57,13 @@ class Routes {
                         //   );
                         // LoginBloc.get(context).emailController.clear();
                         // LoginBloc.get(context).passWordController.clear();
-
-                      }if (state.screenStatus == ScreenStatus.failure) {
+                      }
+                      if (state.screenStatus == ScreenStatus.failure) {
                         showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
                                   title: Text("Failue"),
-                                  content:
-                                      Text(state.failures?.message??""),
+                                  content: Text(state.failures?.message ?? ""),
                                 ));
                       }
                     },
@@ -79,7 +75,7 @@ class Routes {
       case AppRoutes.signUp:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                create: (_) => getIt<SignUpBloc>(),
+                create: (_) => serviceLocator<SignUpBloc>(),
                 child: BlocConsumer<SignUpBloc, SignUpState>(
                   listener: (context, state) {
                     // TODO: implement listener
@@ -99,7 +95,7 @@ class Routes {
       case AppRoutes.controlScreen:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (_) => getIt<ControlCubit>(),
+            create: (_) => serviceLocator<ControlCubit>(),
             child: const ControlScreen(),
           ),
         );

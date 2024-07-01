@@ -21,6 +21,7 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                SizedBox(height: 20),
                 const Center(
                   child: Text(
                     'SignUp',
@@ -31,10 +32,10 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 10.0,
+                  height: 20.0,
                 ),
                 Form(
-                  key: Constants.formKey1,
+                  key: AppConstance.formKey1,
                   child: Column(
                     children: [
                       TextFieldItem(
@@ -152,7 +153,7 @@ class SignUpScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('You Already have an account'),
+                    const Text('You Already have an account !'),
                     TextButton(
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.login);
@@ -171,4 +172,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-

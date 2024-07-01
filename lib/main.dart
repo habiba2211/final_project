@@ -1,7 +1,8 @@
 // import 'package:final_project/firebase_options.dart';
 import 'package:final_project/config/routes/routes.dart';
+import 'package:final_project/core/di/service_initializer.dart';
 import 'package:final_project/features/settings/presentation/bloc/settings_cubit.dart';
-
+import 'package:final_project/layout/presentation/logic/home_layout_cubit.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ import 'core/observers/bloc_observer.dart';
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
+  await ServiceInitializer.instance.initializeSettings();
   // WidgetsFlutterBinding.ensureInitialized();
   await dependencyInjectionInit();
   Bloc.observer = MyBlocObserver();
@@ -42,11 +44,14 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => MaterialApp(
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        initialRoute: "/",
-        onGenerateRoute: (settings) => Routes.onGenerate(settings),
+      builder: (context, child) => BlocProvider(
+        create: (context) => serviceLocator<HomeLayoutCubit>(),
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
+          initialRoute: "/",
+          onGenerateRoute: (settings) => Routes.onGenerate(settings),
+        ),
       ),
     );
   }

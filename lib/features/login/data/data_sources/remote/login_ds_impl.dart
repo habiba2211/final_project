@@ -13,7 +13,8 @@ class LoginRemoteDSImpl implements LoginRemoteDS {
   LoginRemoteDSImpl(this.apiManager);
 
   @override
-  Future<Either<Failures,UserModel>> login(String email, String password) async {
+  Future<Either<Failure, UserModel>> login(
+      String email, String password) async {
     try {
       print("Here");
       debugPrint(EndPoints.logIn);
@@ -30,4 +31,3 @@ class LoginRemoteDSImpl implements LoginRemoteDS {
     }
   }
 }
-

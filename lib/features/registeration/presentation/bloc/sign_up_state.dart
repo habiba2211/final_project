@@ -15,6 +15,6 @@ class SignUpState {
   }
 }
 
-final class SignUpInitial extends SignUpState {
+class SignUpInitial extends SignUpState {
   SignUpInitial() : super(screenStatus: ScreenStatus.init, userEntity: null);
 }

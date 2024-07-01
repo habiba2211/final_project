@@ -1,5 +1,3 @@
-import 'package:bloc/bloc.dart';
-import 'package:final_project/config/routes/routes.dart';
 import 'package:final_project/core/api/api_manager.dart';
 import 'package:final_project/core/utils/constants.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds.dart';
@@ -9,13 +7,10 @@ import 'package:final_project/features/registeration/data/repositories/signup_re
 import 'package:final_project/features/registeration/domain/entities/UserEntity.dart';
 import 'package:final_project/features/registeration/domain/repositories/signup_repo.dart';
 import 'package:final_project/features/registeration/domain/use_cases/signUp_usecase.dart';
-import 'package:final_project/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
-
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
@@ -32,7 +27,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final TextEditingController noteController = TextEditingController();
 
   confirmForm() {
-    if (Constants.formKey1.currentState!.validate()) {
+    if (AppConstance.formKey1.currentState!.validate()) {
       FocusManager.instance.primaryFocus?.unfocus();
       add(RegiesterEvent());
       // Navigator.pushNamed(
