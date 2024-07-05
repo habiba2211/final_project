@@ -1,4 +1,5 @@
 import 'package:final_project/core/api/api_manager.dart';
+import 'package:final_project/core/error/failuers.dart';
 import 'package:final_project/core/utils/constants.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds_impl.dart';
@@ -11,10 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'sign_up_event.dart';
+
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ApiManager apiManager;
+
   static SignUpBloc get(context) => BlocProvider.of(context);
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
@@ -59,13 +62,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           password: passWordController.text,
           address: noteController.text,
         );
-        try {
-          UserEntity userEntity = await signUpUseCase.call(requestData);
-          emit(state.copyWith(
-              screenStatus: ScreenStatus.successfully, userEntity: userEntity));
-        } catch (e) {
-          emit(state.copyWith(screenStatus: ScreenStatus.failure));
-        }
+
+          var result = await signUpUseCase.call(requestData);
+          result.fold((l) {
+            emit(state.copyWith(screenStatus: ScreenStatus.failure,failures: l));
+          }, (r) {
+            emit(state.copyWith(
+                screenStatus: ScreenStatus.successfully, userEntity: r));
+          });
+
       }
     });
   }

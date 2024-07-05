@@ -1,4 +1,6 @@
 
+import 'package:dartz/dartz.dart';
+import 'package:final_project/core/error/failuers.dart';
 import 'package:final_project/features/registeration/data/data_sources/remote/remote_ds.dart';
 import 'package:final_project/features/registeration/data/models/requst_data.dart';
 import 'package:final_project/features/registeration/domain/entities/UserEntity.dart';
@@ -10,6 +12,6 @@ class SignUpRepoImpl implements SignUpRepo{
   SignUpRepoImpl(this.remoteDataSource);
 
   @override
-  Future<UserEntity> signUp(RequestData requestData) => remoteDataSource.signUp(requestData);
+  Future <Either<Failure, UserEntity>> signUp(RequestData requestData) => remoteDataSource.signUp(requestData);
 }
 

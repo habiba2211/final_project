@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstance {
   static const String baseUrl =
-      "https://fe81-105-181-116-62.ngrok-free.app/api/";
+      "https://2c3d-105-180-240-93.ngrok-free.app/api/";
   static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
   static const int connectTimeoutDuration = 60 * 1000;
   static const int receiveTimeoutDuration = 60 * 1000;

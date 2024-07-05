@@ -114,6 +114,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     if (!isClosed) {
       emit(LoadingFetchProcessImageLocalState());
     }
+    listProcessImage.clear();
     List<String> userDataProfile =
         await CacheStorage.read(key: CacheStorageKeys.listImage);
 

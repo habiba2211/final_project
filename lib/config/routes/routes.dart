@@ -78,7 +78,34 @@ class Routes {
                 create: (_) => serviceLocator<SignUpBloc>(),
                 child: BlocConsumer<SignUpBloc, SignUpState>(
                   listener: (context, state) {
-                    // TODO: implement listener
+                    if (state.screenStatus == ScreenStatus.successfully) {
+                      Navigator.pushNamed(context, AppRoutes.login);
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //     context, AppRoutes.homeLayout, (route) => false);
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("SignUp Success"),
+                          content: Text(state.userEntity?.userName ?? ""),
+                        ),
+                      );
+                      Navigator.pop;
+
+                      // Navigator.pushReplacement(
+                      //     navigatorKey.currentState!.context,
+                      //     AppRoutes.homeLayout as Route<Object?>,
+                      //   );
+                      // LoginBloc.get(context).emailController.clear();
+                      // LoginBloc.get(context).passWordController.clear();
+                    }
+                    if (state.screenStatus == ScreenStatus.failure) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Failue"),
+                            content: Text(state.failures?.message ?? ""),
+                          ));
+                    }
                   },
                   builder: (context, state) {
                     return SignUpScreen();
